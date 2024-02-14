@@ -1,0 +1,277 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="UpdateJIRATicketWithAttachment"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:ui="http://schemas.uipath.com/workflow/activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="in_TicketFileName" Type="InArgument(x:String)" />
+    <x:Property Name="in_TransactionData" Type="InArgument(sd:DataTable)" />
+    <x:Property Name="in_RequestNumber" Type="InArgument(x:String)" />
+    <x:Property Name="in_ReporterName" Type="InArgument(x:String)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>UpdateJIRATicketWithAttachment_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>UiPath.Core</AssemblyReference>
+      <AssemblyReference>UiPath.Core.Activities</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>UiPath.Cryptography</AssemblyReference>
+      <AssemblyReference>UiPath.IntelligentOCR</AssemblyReference>
+      <AssemblyReference>UiPath.Java.Activities</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <TryCatch DisplayName="Try catch" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+    <TryCatch.Try>
+      <Sequence DisplayName="UpdateJIRATicketWithAttachment" sap2010:WorkflowViewState.IdRef="Sequence_1">
+        <Sequence.Variables>
+          <Variable x:TypeArguments="x:Boolean" Name="isTicketPresent" />
+          <Variable x:TypeArguments="x:String" Name="statusFilePath" />
+        </Sequence.Variables>
+        <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="Updating JIRA ticket with Transaction Status file" />
+        <Sequence sap2010:WorkflowViewState.IdRef="Sequence_5">
+          <ui:PathExists DisplayName="Path Ticket File Exists" Exists="[isTicketPresent]" sap2010:WorkflowViewState.IdRef="PathExists_3" Path="[in_Config(&quot;DownloadFolderPath&quot;).ToString+in_TicketFileName]" PathType="File" />
+          <If Condition="[isTicketPresent]" DisplayName="If ticket present then delete file" sap2010:WorkflowViewState.IdRef="If_3">
+            <If.Then>
+              <ui:Delete ContinueOnError="{x:Null}" sap2010:WorkflowViewState.IdRef="Delete_4" Path="[in_Config(&quot;DownloadFolderPath&quot;).ToString+in_TicketFileName]" />
+            </If.Then>
+          </If>
+        </Sequence>
+        <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
+          <Assign.To>
+            <OutArgument x:TypeArguments="x:String">[statusFilePath]</OutArgument>
+          </Assign.To>
+          <Assign.Value>
+            <InArgument x:TypeArguments="x:String">[in_Config("DownloadFolderPath").ToString+in_RequestNumber+" Transaction Status"+DateTime.Now.ToString("ddMMyyhhmmss")+".xlsx"]</InArgument>
+          </Assign.Value>
+        </Assign>
+        <Sequence DisplayName="Sequence for creating transaction status file" sap2010:WorkflowViewState.IdRef="Sequence_2">
+          <Sequence.Variables>
+            <Variable x:TypeArguments="x:Boolean" Name="TransactionStatusFileExists" />
+          </Sequence.Variables>
+          <ui:WriteRange AddHeaders="True" DataTable="[in_TransactionData]" DisplayName="Write Range for creating transactionstatus file" sap2010:WorkflowViewState.IdRef="WriteRange_1" SheetName="TransactionStatus" StartingCell="A1" WorkbookPath="[statusFilePath]" />
+          <ui:PathExists DisplayName="Path exists" Exists="[TransactionStatusFileExists]" Path="[statusFilePath]" PathType="File" sap2010:WorkflowViewState.IdRef="PathExists_4" />
+          <If Condition="[TransactionStatusFileExists]">
+            <If.Then>
+              <Sequence>
+                <ui:LogMessage DisplayName="Log message" Level="Info" Message="[&quot;Copying file to Backup folder:&quot;+statusFilePath]" sap2010:WorkflowViewState.IdRef="LogMessage_8" />
+                <ui:CopyFile ContinueOnError="{x:Null}" Destination="[in_Config(&quot;ErrorScreenshotsBackupFolderPath&quot;).ToString+&quot;\&quot;+statusFilePath.Split(&quot;\&quot;.ToCharArray).Last]" DisplayName="Copy file" Overwrite="False" Path="[statusFilePath]" sap2010:WorkflowViewState.IdRef="CopyFile_1" />
+                <sap2010:WorkflowViewState.IdRef>Sequence_9</sap2010:WorkflowViewState.IdRef>
+              </Sequence>
+            </If.Then>
+            <sap2010:WorkflowViewState.IdRef>If_4</sap2010:WorkflowViewState.IdRef>
+          </If>
+        </Sequence>
+        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke AttachingTransactionStatusExcelToJiraTicket workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="JIRA\AttachingTransactionStatusExcelToJiraTicket.xaml">
+          <ui:InvokeWorkflowFile.Arguments>
+            <InArgument x:TypeArguments="x:String" x:Key="in_RequestNumber">[in_RequestNumber]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="in_TransactionStatusFilePath">[statusFilePath]</InArgument>
+            <InArgument x:TypeArguments="sd:DataTable" x:Key="in_TransactionData">[in_TransactionData]</InArgument>
+            <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+          </ui:InvokeWorkflowFile.Arguments>
+        </ui:InvokeWorkflowFile>
+        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke JIRA-UpdateStatus workflow" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="JIRA\JIRA-UpdateStatus.xaml">
+          <ui:InvokeWorkflowFile.Arguments>
+            <InArgument x:TypeArguments="x:String" x:Key="in_comments" />
+            <InArgument x:TypeArguments="scg:Dictionary(x:String, x:String)" x:Key="in_TicketInfo" />
+            <InArgument x:TypeArguments="x:String" x:Key="in_RequestNumber">[in_RequestNumber]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="in_AssigneeName">[in_ReporterName]</InArgument>
+            <InArgument x:TypeArguments="x:Boolean" x:Key="in_SetWaitingStatus">True</InArgument>
+            <InArgument x:TypeArguments="scg:Dictionary(x:String, x:Object)" x:Key="in_Config">[in_Config]</InArgument>
+          </ui:InvokeWorkflowFile.Arguments>
+        </ui:InvokeWorkflowFile>
+        <ui:Delete ContinueOnError="{x:Null}" sap2010:WorkflowViewState.IdRef="Delete_2" Path="[statusFilePath]" />
+        <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="Updating JIRA ticket with Transaction Status file complete" />
+        <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[&quot;Process completed for ticket-&quot;+in_RequestNumber]" />
+      </Sequence>
+    </TryCatch.Try>
+    <TryCatch.Catches>
+      <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+        <ActivityAction x:TypeArguments="s:Exception">
+          <ActivityAction.Argument>
+            <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+          </ActivityAction.Argument>
+          <TryCatch DisplayName="Try catch" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+            <TryCatch.Try>
+              <Sequence sap2010:WorkflowViewState.IdRef="Sequence_7">
+                <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Adding Comment to ticket-&quot;+exception.Message]" />
+                <Throw Exception="[exception]" sap2010:WorkflowViewState.IdRef="Throw_2" />
+              </Sequence>
+            </TryCatch.Try>
+            <TryCatch.Catches>
+              <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+                <ActivityAction x:TypeArguments="s:Exception">
+                  <ActivityAction.Argument>
+                    <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                  </ActivityAction.Argument>
+                  <Sequence sap2010:WorkflowViewState.IdRef="Sequence_8">
+                    <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Info" Message="[&quot;Adding exception  comment to JIRA Failed.  &quot;+exception.Message]" />
+                    <Throw Exception="[exception]" sap2010:WorkflowViewState.IdRef="Throw_3" />
+                  </Sequence>
+                </ActivityAction>
+              </Catch>
+            </TryCatch.Catches>
+          </TryCatch>
+        </ActivityAction>
+      </Catch>
+    </TryCatch.Catches>
+    <sads:DebugSymbol.Symbol>d5UBQzpcVXNlcnNcVmFpZHlhS1xEZXNrdG9wXEFsbCBjb2Rlc1xUZXN0IENvZGVcTURNX0F1dG9tYXRlUGFydENyZWF0aW9uUkVGMTgwMzIwMTlcTURNX0F1dG9tYXRlUGFydENyZWF0aW9uUkVGXEpJUkFcVXBkYXRlSklSQVRpY2tldFdpdGhBdHRhY2htZW50LnhhbWw9UAOvAQ4CAQFSB44BEgIBEZYBC6oBFgIBAlcJV6wBAgFXWAlfFAIBSWAJZxICAUVoCXgUAgEteQmAASECASOBAQmKASECARqLAQmLAXQCAReMAQmMAbUBAgEVjQEJjQG3AQIBEpgBD5sBGgIBCqMBE6YBHgIBA1d2V6kBAgFYWQtZ6gECAVFaC14QAgFKZTRlswECAUhiNWJFAgFGbAtsjAICAT5tC220AQIBOW4LdxACAS58WXxpAgEre017XwIBKX1TfWcCASd+YH5rAgEledwBeZMCAgEkhQFNhQFfAgEhhgFMhgFdAgEfiAFgiAFrAgEdhwFRhwFVAgEcgQHCAYEB3wECARuLAV+LAXECARiMAXaMAbIBAgEWjQF2jQG0AQIBE5kBEZkBvAECAQ6aARGaAVwCAQukARWkAdIBAgEHpQEVpQFgAgEEWUdZWgIBVVmPAVnXAQIBUloZWiwCAUtcD1ywAQIBTWzlAWzpAQIBRGw2bEwCAUJsxAFs1wECAUFs9wFsiQICAT9tO21aAgE8bWBtcgIBOm4ZbjgCAS9wD3QaAgExmQF+mQG5AQIBD5oBIpoBLwIBDKQBggGkAc8BAgEIpQEmpQEzAgEFXGVcrQECAU5xEXG+AQIBNnIRcr4CAgEycU9xjAECATdyRXLMAQIBNXL8AXKOAgIBMw==</sads:DebugSymbol.Symbol>
+  </TryCatch>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="LogMessage_2" sap:VirtualizedContainerService.HintSize="486,91" />
+      <sap2010:ViewStateData Id="PathExists_3" sap:VirtualizedContainerService.HintSize="314,89" />
+      <sap2010:ViewStateData Id="Delete_4" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="314,51">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="486,304">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="486,60" />
+      <sap2010:ViewStateData Id="WriteRange_1" sap:VirtualizedContainerService.HintSize="464,115" />
+      <sap2010:ViewStateData Id="PathExists_4" sap:VirtualizedContainerService.HintSize="464,89" />
+      <sap2010:ViewStateData Id="LogMessage_8" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="CopyFile_1" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="336,277">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_4" sap:VirtualizedContainerService.HintSize="464,425" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="486,833">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_2" sap:VirtualizedContainerService.HintSize="486,87" />
+      <sap2010:ViewStateData Id="InvokeWorkflowFile_1" sap:VirtualizedContainerService.HintSize="486,87" />
+      <sap2010:ViewStateData Id="Delete_2" sap:VirtualizedContainerService.HintSize="486,22" />
+      <sap2010:ViewStateData Id="LogMessage_3" sap:VirtualizedContainerService.HintSize="486,91" />
+      <sap2010:ViewStateData Id="LogMessage_7" sap:VirtualizedContainerService.HintSize="336,91" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="508,2110">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="LogMessage_5" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="Throw_2" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="Sequence_7" sap:VirtualizedContainerService.HintSize="336,277">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="LogMessage_6" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="Throw_3" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="Sequence_8" sap:VirtualizedContainerService.HintSize="336,277">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Catch`1_2" sap:VirtualizedContainerService.HintSize="404,21">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="418,504">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Catch`1_1" sap:VirtualizedContainerService.HintSize="404,21">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="526,2337" />
+      <sap2010:ViewStateData Id="UpdateJIRATicketWithAttachment_1" sap:VirtualizedContainerService.HintSize="566,2417" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>

@@ -1,0 +1,1060 @@
+<Activity mc:Ignorable="sap sap2010" x:Class="JIRALogin" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib" xmlns:ss="clr-namespace:System.Security;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_Config" Type="InArgument(scg:Dictionary(x:String, x:Object))" />
+    <x:Property Name="out_loginSucess" Type="OutArgument(x:Boolean)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap:VirtualizedContainerService.HintSize>1390.66666666667,1486.66666666667</sap:VirtualizedContainerService.HintSize>
+  <sap2010:WorkflowViewState.IdRef>JIRALogin_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="JIRALogin" sap:VirtualizedContainerService.HintSize="1370.66666666667,1426.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_17">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:Int32" Name="MaxRetryCount" />
+    </Sequence.Variables>
+    <sap:WorkflowViewStateService.ViewState>
+      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+      </scg:Dictionary>
+    </sap:WorkflowViewStateService.ViewState>
+    <TryCatch DisplayName="Try catch" sap:VirtualizedContainerService.HintSize="1328.66666666667,1334.66666666667" sap2010:WorkflowViewState.IdRef="TryCatch_3">
+      <TryCatch.Variables>
+        <Variable x:TypeArguments="ss:SecureString" Name="password" />
+        <Variable x:TypeArguments="x:String" Name="usrname" />
+      </TryCatch.Variables>
+      <TryCatch.Try>
+        <Sequence sap:VirtualizedContainerService.HintSize="1290,1097.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_15">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <Flowchart sap:VirtualizedContainerService.HintSize="1248,1005.33333333333" sap2010:WorkflowViewState.IdRef="Flowchart_2">
+            <Flowchart.Variables>
+              <Variable x:TypeArguments="x:Int32" Default="0" Name="RetryCount" />
+              <Variable x:TypeArguments="s:Exception" Name="SystemException" />
+              <Variable x:TypeArguments="ui:BusinessRuleException" Name="BusinessRuleException" />
+            </Flowchart.Variables>
+            <sap:WorkflowViewStateService.ViewState>
+              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                <av:Point x:Key="ShapeLocation">500,2.5</av:Point>
+                <av:Size x:Key="ShapeSize">60,74.6666666666667</av:Size>
+                <av:PointCollection x:Key="ConnectorLocation">530,77.5 530,144.5</av:PointCollection>
+                <x:Double x:Key="Width">1214</x:Double>
+                <x:Double x:Key="Height">969.40000000000009</x:Double>
+                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+              </scg:Dictionary>
+            </sap:WorkflowViewStateService.ViewState>
+            <Flowchart.StartNode>
+              <x:Reference>__ReferenceID21</x:Reference>
+            </Flowchart.StartNode>
+            <FlowDecision x:Name="__ReferenceID14" Condition="[out_loginSucess]" sap:VirtualizedContainerService.HintSize="70,86.6666666666667" sap2010:WorkflowViewState.IdRef="FlowDecision_5">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                  <av:Point x:Key="ShapeLocation">495,266.5</av:Point>
+                  <av:Size x:Key="ShapeSize">70,86.6666666666667</av:Size>
+                  <av:PointCollection x:Key="TrueConnector">495,310 320,310 320,374.5</av:PointCollection>
+                  <av:PointCollection x:Key="FalseConnector">565,310 670,310 670,384.5</av:PointCollection>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <FlowDecision.True>
+                <FlowStep x:Name="__ReferenceID15" sap2010:WorkflowViewState.IdRef="FlowStep_1">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <av:Point x:Key="ShapeLocation">220,374.5</av:Point>
+                      <av:Size x:Key="ShapeSize">200,52.6666666666667</av:Size>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <ui:LogMessage DisplayName="Log message Login success" sap:VirtualizedContainerService.HintSize="200,52.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;JDE Login Successfull&quot;]" />
+                </FlowStep>
+              </FlowDecision.True>
+              <FlowDecision.False>
+                <FlowStep x:Name="__ReferenceID19" sap2010:WorkflowViewState.IdRef="FlowStep_19">
+                  <sap:WorkflowViewStateService.ViewState>
+                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                      <av:Point x:Key="ShapeLocation">570,384.5</av:Point>
+                      <av:Size x:Key="ShapeSize">200,50.6666666666667</av:Size>
+                      <av:PointCollection x:Key="ConnectorLocation">770,410 910,410 910,466.5</av:PointCollection>
+                    </scg:Dictionary>
+                  </sap:WorkflowViewStateService.ViewState>
+                  <Sequence DisplayName="Sequence for closing browser if open" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="Sequence_1">
+                    <Sequence.Variables>
+                      <Variable x:TypeArguments="x:Boolean" Name="BrowserOpen" />
+                    </Sequence.Variables>
+                    <sap:WorkflowViewStateService.ViewState>
+                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                      </scg:Dictionary>
+                    </sap:WorkflowViewStateService.ViewState>
+                    <ui:KillProcess ContinueOnError="{x:Null}" Process="{x:Null}" DisplayName="Kill process" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="KillProcess_1" ProcessName="chrome" />
+                  </Sequence>
+                  <FlowStep.Next>
+                    <FlowDecision x:Name="__ReferenceID22" Condition="[BusinessRuleException is nothing]" sap:VirtualizedContainerService.HintSize="70,87" sap2010:WorkflowViewState.IdRef="FlowDecision_4">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                          <av:Point x:Key="ShapeLocation">875,466.5</av:Point>
+                          <av:Size x:Key="ShapeSize">70,86.6666666666667</av:Size>
+                          <av:PointCollection x:Key="TrueConnector">875,510 500,510 500,574.5</av:PointCollection>
+                          <av:PointCollection x:Key="FalseConnector">945,510 1080,510 1080,624.5</av:PointCollection>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <FlowDecision.True>
+                        <FlowStep x:Name="__ReferenceID25" sap2010:WorkflowViewState.IdRef="FlowStep_16">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <av:Point x:Key="ShapeLocation">400,574.5</av:Point>
+                              <av:Size x:Key="ShapeSize">200,50.6666666666667</av:Size>
+                              <av:PointCollection x:Key="ConnectorLocation">600,600 760,600 760,606.5</av:PointCollection>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Info" Message="[&quot;Retry count:&quot;+RetryCount.ToString+&quot;  max retry count:&quot;+MaxRetryCount.ToString]">
+                            <sap:WorkflowViewStateService.ViewState>
+                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                              </scg:Dictionary>
+                            </sap:WorkflowViewStateService.ViewState>
+                          </ui:LogMessage>
+                          <FlowStep.Next>
+                            <FlowDecision x:Name="__ReferenceID16" Condition="[RetryCount&lt;MaxRetryCount]" sap:VirtualizedContainerService.HintSize="70,87" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  <av:Point x:Key="ShapeLocation">725,606.5</av:Point>
+                                  <av:Size x:Key="ShapeSize">70,86.6666666666667</av:Size>
+                                  <av:PointCollection x:Key="TrueConnector">725,650 695,650 695,576.5 1070,576.5 1070,200</av:PointCollection>
+                                  <av:PointCollection x:Key="FalseConnector">795,650 825,650 825,704.5 770,704.5 770,734.5</av:PointCollection>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <FlowDecision.True>
+                                <FlowStep x:Name="__ReferenceID20" sap2010:WorkflowViewState.IdRef="FlowStep_13">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <av:Point x:Key="ShapeLocation">949,140</av:Point>
+                                      <av:Size x:Key="ShapeSize">242,60</av:Size>
+                                      <av:PointCollection x:Key="ConnectorLocation">949,170 919,170 919,179.166666666667 630,179.166666666667</av:PointCollection>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <Assign sap:VirtualizedContainerService.HintSize="242,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="x:Int32">[RetryCount]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="x:Int32">[RetryCount+1]</InArgument>
+                                    </Assign.Value>
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                  </Assign>
+                                  <FlowStep.Next>
+                                    <FlowStep x:Name="__ReferenceID21" sap2010:WorkflowViewState.IdRef="FlowStep_12">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <av:Point x:Key="ShapeLocation">430,144.5</av:Point>
+                                          <av:Size x:Key="ShapeSize">200,69.3333333333333</av:Size>
+                                          <av:PointCollection x:Key="ConnectorLocation">530,213.833333333333 530,266.5</av:PointCollection>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <Sequence DisplayName="Sequence for JIRA Login" sap:VirtualizedContainerService.HintSize="824.666666666667,1574.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_14">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                        <TryCatch DisplayName="Try catch" sap:VirtualizedContainerService.HintSize="782.666666666667,1482.66666666667" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+                                          <TryCatch.Try>
+                                            <Flowchart DisplayName="Login_JIRA" sap:VirtualizedContainerService.HintSize="744,1222.66666666667" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+                                              <Flowchart.Variables>
+                                                <Variable x:TypeArguments="x:Boolean" Name="isSignInWin" />
+                                                <Variable x:TypeArguments="x:Boolean" Name="ISEpicPage" />
+                                              </Flowchart.Variables>
+                                              <sap:WorkflowViewStateService.ViewState>
+                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
+                                                  <av:Size x:Key="ShapeSize">60,74.6666666666667</av:Size>
+                                                  <av:PointCollection x:Key="ConnectorLocation">330,39.8333333333333 570,39.8333333333333 570,50</av:PointCollection>
+                                                  <x:Double x:Key="Width">710</x:Double>
+                                                  <x:Double x:Key="Height">1187</x:Double>
+                                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                </scg:Dictionary>
+                                              </sap:WorkflowViewStateService.ViewState>
+                                              <Flowchart.StartNode>
+                                                <x:Reference>__ReferenceID13</x:Reference>
+                                              </Flowchart.StartNode>
+                                              <FlowStep x:Name="__ReferenceID12" sap2010:WorkflowViewState.IdRef="FlowStep_11">
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <av:Point x:Key="ShapeLocation">200,127.5</av:Point>
+                                                    <av:Size x:Key="ShapeSize">200,69.3333333333333</av:Size>
+                                                    <av:PointCollection x:Key="ConnectorLocation">300,196.833333333333 280,196.833333333333 280,214.5</av:PointCollection>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                                <Sequence sap2010:Annotation.AnnotationText="Get credentials uses Config Dictionary To get Assset Name" DisplayName="Get credentials" sap:VirtualizedContainerService.HintSize="200,69.3333333333333" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                                                  <sap:WorkflowViewStateService.ViewState>
+                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                      <x:Boolean x:Key="IsAnnotationDocked">False</x:Boolean>
+                                                    </scg:Dictionary>
+                                                  </sap:WorkflowViewStateService.ViewState>
+                                                  <ui:GetRobotCredential TimeoutMS="{x:Null}" AssetName="[in_Config(&quot;JiraCredsAssetName&quot;).ToString]" DisplayName="Get Credential" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="GetRobotCredential_1" Password="[password]" Username="[usrname]" />
+                                                </Sequence>
+                                                <FlowStep.Next>
+                                                  <FlowStep x:Name="__ReferenceID9" sap2010:WorkflowViewState.IdRef="FlowStep_10">
+                                                    <sap:WorkflowViewStateService.ViewState>
+                                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                        <av:Point x:Key="ShapeLocation">180,214.5</av:Point>
+                                                        <av:Size x:Key="ShapeSize">200,52.6666666666667</av:Size>
+                                                        <av:PointCollection x:Key="ConnectorLocation">280,267.166666666667 270,267.166666666667 270,291</av:PointCollection>
+                                                      </scg:Dictionary>
+                                                    </sap:WorkflowViewStateService.ViewState>
+                                                    <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="200,52.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Login with Username:   &quot;+usrname]">
+                                                      <sap:WorkflowViewStateService.ViewState>
+                                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                        </scg:Dictionary>
+                                                      </sap:WorkflowViewStateService.ViewState>
+                                                    </ui:LogMessage>
+                                                    <FlowStep.Next>
+                                                      <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_9">
+                                                        <sap:WorkflowViewStateService.ViewState>
+                                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                            <av:Point x:Key="ShapeLocation">170,291</av:Point>
+                                                            <av:Size x:Key="ShapeSize">200,100</av:Size>
+                                                            <av:PointCollection x:Key="ConnectorLocation">270,391 294.333333333333,391 294.333333333333,406.5</av:PointCollection>
+                                                          </scg:Dictionary>
+                                                        </sap:WorkflowViewStateService.ViewState>
+                                                        <Sequence sap2010:Annotation.AnnotationText="Enter url" DisplayName="open browser JIRA Login Flow" sap:VirtualizedContainerService.HintSize="1062,2154.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                                                          <Sequence.Variables>
+                                                            <Variable x:TypeArguments="x:String" Name="url" />
+                                                          </Sequence.Variables>
+                                                          <sap:WorkflowViewStateService.ViewState>
+                                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                              <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                                            </scg:Dictionary>
+                                                          </sap:WorkflowViewStateService.ViewState>
+                                                          <ui:CommentOut DisplayName="Comment out" sap:VirtualizedContainerService.HintSize="1020,52.6666666666667" sap2010:WorkflowViewState.IdRef="CommentOut_1">
+                                                            <ui:CommentOut.Body>
+                                                              <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="304,154" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                                                                <sap:WorkflowViewStateService.ViewState>
+                                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                  </scg:Dictionary>
+                                                                </sap:WorkflowViewStateService.ViewState>
+                                                                <Assign sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_2">
+                                                                  <Assign.To>
+                                                                    <OutArgument x:TypeArguments="x:String">[url]</OutArgument>
+                                                                  </Assign.To>
+                                                                  <Assign.Value>
+                                                                    <InArgument x:TypeArguments="x:String">["https://jira.nov.com/browse/WTMDM-14454?filter=-1&amp;jql=%22Customer%20Request%20Type%22%20%3D%20%22AVL%20Maintenance%20(WTMDM)%22%20and%20status%20%3D%20%22To%20Do%22%20ORDER%20BY%20createdDate%20ASC"]</InArgument>
+                                                                  </Assign.Value>
+                                                                </Assign>
+                                                              </Sequence>
+                                                            </ui:CommentOut.Body>
+                                                            <sap:WorkflowViewStateService.ViewState>
+                                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                              </scg:Dictionary>
+                                                            </sap:WorkflowViewStateService.ViewState>
+                                                          </ui:CommentOut>
+                                                          <ui:OpenBrowser UiBrowser="{x:Null}" BrowserType="Chrome" DisplayName="Open browser" Hidden="False" sap:VirtualizedContainerService.HintSize="1020,1939.33333333333" sap2010:WorkflowViewState.IdRef="OpenBrowser_1" NewSession="True" Private="False" Url="[in_Config(&quot;JIRALoginURL&quot;).ToString]">
+                                                            <ui:OpenBrowser.Body>
+                                                              <ActivityAction x:TypeArguments="x:Object">
+                                                                <ActivityAction.Argument>
+                                                                  <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                                                </ActivityAction.Argument>
+                                                                <Sequence sap:VirtualizedContainerService.HintSize="986,1840.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_18">
+                                                                  <Sequence.Variables>
+                                                                    <Variable x:TypeArguments="x:Boolean" Name="InvalidCredsPrompt" />
+                                                                  </Sequence.Variables>
+                                                                  <sap:WorkflowViewStateService.ViewState>
+                                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                    </scg:Dictionary>
+                                                                  </sap:WorkflowViewStateService.ViewState>
+                                                                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="944,759.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_6">
+                                                                    <Sequence.Variables>
+                                                                      <Variable x:TypeArguments="x:Boolean" Name="isLoginTabPresent" />
+                                                                      <Variable x:TypeArguments="x:Boolean" Name="isRestorePopupPresent" />
+                                                                    </Sequence.Variables>
+                                                                    <sap:WorkflowViewStateService.ViewState>
+                                                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                      </scg:Dictionary>
+                                                                    </sap:WorkflowViewStateService.ViewState>
+                                                                    <ui:Activate DelayBefore="{x:Null}" DelayMS="{x:Null}" DisplayName="Activate (Add this activity in OPen Browser)" sap:VirtualizedContainerService.HintSize="334,68" sap2010:WorkflowViewState.IdRef="Activate_1">
+                                                                      <ui:Activate.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;html app='chrome.exe' /&gt;" WaitForReady="COMPLETE" />
+                                                                      </ui:Activate.Target>
+                                                                    </ui:Activate>
+                                                                    <ui:MaximizeWindow Window="{x:Null}" DisplayName="Maximize window" sap:VirtualizedContainerService.HintSize="334,22" sap2010:WorkflowViewState.IdRef="MaximizeWindow_1" />
+                                                                    <ui:CommentOut DisplayName="Comment out" sap:VirtualizedContainerService.HintSize="334,52.6666666666667" sap2010:WorkflowViewState.IdRef="CommentOut_2">
+                                                                      <ui:CommentOut.Body>
+                                                                        <Sequence DisplayName="Ignored Activities" sap:VirtualizedContainerService.HintSize="566.666666666667,144.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_23">
+                                                                          <sap:WorkflowViewStateService.ViewState>
+                                                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                            </scg:Dictionary>
+                                                                          </sap:WorkflowViewStateService.ViewState>
+                                                                          <TryCatch DisplayName="Try catch Sequence for Removing Chrome Restore Popup" sap:VirtualizedContainerService.HintSize="262.666666666667,52.6666666666667" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+                                                                            <sap:WorkflowViewStateService.ViewState>
+                                                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                                <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                              </scg:Dictionary>
+                                                                            </sap:WorkflowViewStateService.ViewState>
+                                                                            <TryCatch.Try>
+                                                                              <Sequence sap:VirtualizedContainerService.HintSize="486,816" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                                                                                <sap:WorkflowViewStateService.ViewState>
+                                                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                                  </scg:Dictionary>
+                                                                                </sap:WorkflowViewStateService.ViewState>
+                                                                                <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="464,91" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Info" Message="[&quot;Checking if restore Popup present&quot;]" />
+                                                                                <ui:UiElementExists DisplayName="Element Exists" Exists="[isRestorePopupPresent]" sap:VirtualizedContainerService.HintSize="464,68" sap2010:WorkflowViewState.IdRef="UiElementExists_1">
+                                                                                  <ui:UiElementExists.Target>
+                                                                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;wnd app='chrome.exe' title='Restore pages?' aaname='Restore pages?' /&gt;" TimeoutMS="5000" WaitForReady="COMPLETE" />
+                                                                                  </ui:UiElementExists.Target>
+                                                                                </ui:UiElementExists>
+                                                                                <If Condition="[isRestorePopupPresent]" sap:VirtualizedContainerService.HintSize="464,453" sap2010:WorkflowViewState.IdRef="If_1">
+                                                                                  <sap:WorkflowViewStateService.ViewState>
+                                                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                                      <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                                    </scg:Dictionary>
+                                                                                  </sap:WorkflowViewStateService.ViewState>
+                                                                                  <If.Then>
+                                                                                    <Sequence sap:VirtualizedContainerService.HintSize="336,306" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                                                                                      <sap:WorkflowViewStateService.ViewState>
+                                                                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                                        </scg:Dictionary>
+                                                                                      </sap:WorkflowViewStateService.ViewState>
+                                                                                      <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Restore Popup present&quot;]" />
+                                                                                      <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" sap:VirtualizedContainerService.HintSize="314,51" sap2010:WorkflowViewState.IdRef="Click_1" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                                                                                        <ui:Click.CursorPosition>
+                                                                                          <ui:CursorPosition Position="Center">
+                                                                                            <ui:CursorPosition.OffsetX>
+                                                                                              <InArgument x:TypeArguments="x:Int32" />
+                                                                                            </ui:CursorPosition.OffsetX>
+                                                                                            <ui:CursorPosition.OffsetY>
+                                                                                              <InArgument x:TypeArguments="x:Int32" />
+                                                                                            </ui:CursorPosition.OffsetY>
+                                                                                          </ui:CursorPosition>
+                                                                                        </ui:Click.CursorPosition>
+                                                                                        <ui:Click.Target>
+                                                                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;wnd app='chrome.exe' title='Restore pages?' /&gt;&lt;ctrl name='Restore pages?' role='alert' /&gt;&lt;ctrl idx='1' role='push button' /&gt;" WaitForReady="COMPLETE" />
+                                                                                        </ui:Click.Target>
+                                                                                        <sap:WorkflowViewStateService.ViewState>
+                                                                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                                            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                                          </scg:Dictionary>
+                                                                                        </sap:WorkflowViewStateService.ViewState>
+                                                                                      </ui:Click>
+                                                                                    </Sequence>
+                                                                                  </If.Then>
+                                                                                </If>
+                                                                              </Sequence>
+                                                                            </TryCatch.Try>
+                                                                            <TryCatch.Catches>
+                                                                              <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="490,21" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                                                                                <sap:WorkflowViewStateService.ViewState>
+                                                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                    <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                                    <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                                  </scg:Dictionary>
+                                                                                </sap:WorkflowViewStateService.ViewState>
+                                                                                <ActivityAction x:TypeArguments="s:Exception">
+                                                                                  <ActivityAction.Argument>
+                                                                                    <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                                                                                  </ActivityAction.Argument>
+                                                                                  <WriteLine DisplayName="Write line" sap:VirtualizedContainerService.HintSize="210,61" sap2010:WorkflowViewState.IdRef="WriteLine_1" Text="[&quot;Close Restore popup failed:&quot;+exception.Message]" />
+                                                                                </ActivityAction>
+                                                                              </Catch>
+                                                                            </TryCatch.Catches>
+                                                                          </TryCatch>
+                                                                        </Sequence>
+                                                                      </ui:CommentOut.Body>
+                                                                      <sap:WorkflowViewStateService.ViewState>
+                                                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                        </scg:Dictionary>
+                                                                      </sap:WorkflowViewStateService.ViewState>
+                                                                    </ui:CommentOut>
+                                                                    <TryCatch DisplayName="Try catch" sap:VirtualizedContainerService.HintSize="334,52.6666666666667" sap2010:WorkflowViewState.IdRef="TryCatch_4">
+                                                                      <sap:WorkflowViewStateService.ViewState>
+                                                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                          <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                          <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                        </scg:Dictionary>
+                                                                      </sap:WorkflowViewStateService.ViewState>
+                                                                      <TryCatch.Try>
+                                                                        <Sequence sap:VirtualizedContainerService.HintSize="697,779" sap2010:WorkflowViewState.IdRef="Sequence_25">
+                                                                          <Sequence.Variables>
+                                                                            <Variable x:TypeArguments="ui:UiElement" Name="RestorePopuCross" />
+                                                                            <Variable x:TypeArguments="x:Boolean" Name="RestorePopupPresent" />
+                                                                          </Sequence.Variables>
+                                                                          <sap:WorkflowViewStateService.ViewState>
+                                                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                            </scg:Dictionary>
+                                                                          </sap:WorkflowViewStateService.ViewState>
+                                                                          <ui:ImageFound DisplayName="Image Exists 'Restore Popup'" Found="[RestorePopupPresent]" sap:VirtualizedContainerService.HintSize="675,106" sap2010:WorkflowViewState.IdRef="ImageFound_1">
+                                                                            <ui:ImageFound.Image>
+                                                                              <ui:ImageTarget Image="{x:Null}" Accuracy="0.8" TargetImageBase64="iVBORw0KGgoAAAANSUhEUgAAABYAAAAVCAYAAABCIB6VAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACqSURBVEhL7ZPRCoJAEEX90x588SOMAsMoSIqivnSfJw64Nrss41D4Eh4Q5M5yHGbWShZiFU/8mfh6f8rxPEgIYUw+kFG7PV5jkmKK+9NFNnUj2/0hkfNORo0zJUwxgnbXJXItpaY/qJmdcS73SMG1PC33SMEtjp3Gzn8Waymd6rFY8tnl5TPl8chNcbxu+Uy1nLtcwhTzgyAvdUVGjTMlXMv7hlU8sZBY5A3lF91Tv3tlSwAAAABJRU5ErkJggg==" />
+                                                                            </ui:ImageFound.Image>
+                                                                            <ui:ImageFound.Target>
+                                                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;wnd app='chrome.exe' title='Restore pages?' /&gt;" TimeoutMS="4000" WaitForReady="COMPLETE" />
+                                                                            </ui:ImageFound.Target>
+                                                                          </ui:ImageFound>
+                                                                          <If Condition="[RestorePopupPresent]" sap:VirtualizedContainerService.HintSize="675,509" sap2010:WorkflowViewState.IdRef="If_6">
+                                                                            <If.Then>
+                                                                              <Sequence sap:VirtualizedContainerService.HintSize="336,361" sap2010:WorkflowViewState.IdRef="Sequence_24">
+                                                                                <sap:WorkflowViewStateService.ViewState>
+                                                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                                  </scg:Dictionary>
+                                                                                </sap:WorkflowViewStateService.ViewState>
+                                                                                <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_17" Level="Info" Message="[&quot;Restore popup present&quot;]" />
+                                                                                <ui:ClickImage ContinueOnError="{x:Null}" DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click image 'Close Restore'" sap:VirtualizedContainerService.HintSize="314,106" sap2010:WorkflowViewState.IdRef="ClickImage_1" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False">
+                                                                                  <ui:ClickImage.CursorPosition>
+                                                                                    <ui:CursorPosition Position="Center">
+                                                                                      <ui:CursorPosition.OffsetX>
+                                                                                        <InArgument x:TypeArguments="x:Int32" />
+                                                                                      </ui:CursorPosition.OffsetX>
+                                                                                      <ui:CursorPosition.OffsetY>
+                                                                                        <InArgument x:TypeArguments="x:Int32" />
+                                                                                      </ui:CursorPosition.OffsetY>
+                                                                                    </ui:CursorPosition>
+                                                                                  </ui:ClickImage.CursorPosition>
+                                                                                  <ui:ClickImage.Image>
+                                                                                    <ui:ImageTarget Image="{x:Null}" Accuracy="0.8" TargetImageBase64="iVBORw0KGgoAAAANSUhEUgAAABgAAAAZCAYAAAArK+5dAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACuSURBVEhL7ZNBCgIxDEW9qQs3HkJRUBQFB0XRk3YdeTDFTLX8KIqbPhgYkpKXSaYj+zFNIGkCyf8Fx/PVtvvOUkp95AExcqfLrY88IwWb3cHGk6nNl+uBhHdi5DhTQwooNFusBhJfnJwXl4R2UEqixSG8ZC+JFoe3BLnz/CVfE/jidO7HpSShJZcz54lKpCD/puXMvYS7UEMKuGhIXnVJjBxnaoSX/ClNIGkCgdkdc2wDWLXSm+QAAAAASUVORK5CYII=" />
+                                                                                  </ui:ClickImage.Image>
+                                                                                  <ui:ClickImage.Target>
+                                                                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;wnd app='chrome.exe' title='Restore pages?' /&gt;" WaitForReady="COMPLETE" />
+                                                                                  </ui:ClickImage.Target>
+                                                                                </ui:ClickImage>
+                                                                              </Sequence>
+                                                                            </If.Then>
+                                                                            <If.Else>
+                                                                              <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_18" Level="Info" Message="[&quot;Restore popup not present&quot;]" />
+                                                                            </If.Else>
+                                                                          </If>
+                                                                        </Sequence>
+                                                                      </TryCatch.Try>
+                                                                      <TryCatch.Catches>
+                                                                        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="701,21" sap2010:WorkflowViewState.IdRef="Catch`1_5">
+                                                                          <sap:WorkflowViewStateService.ViewState>
+                                                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                                              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                                            </scg:Dictionary>
+                                                                          </sap:WorkflowViewStateService.ViewState>
+                                                                          <ActivityAction x:TypeArguments="s:Exception">
+                                                                            <ActivityAction.Argument>
+                                                                              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                                                                            </ActivityAction.Argument>
+                                                                            <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_19" Level="Info" Message="[&quot;Failed to click restore popup.Exception: &quot;+exception.Message]" />
+                                                                          </ActivityAction>
+                                                                        </Catch>
+                                                                      </TryCatch.Catches>
+                                                                    </TryCatch>
+                                                                    <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type into UserName" EmptyField="True" sap:VirtualizedContainerService.HintSize="334,96" sap2010:WorkflowViewState.IdRef="TypeInto_2" SendWindowMessages="False" SimulateType="True" Text="[usrname]">
+                                                                      <ui:TypeInto.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;html app='chrome.exe' title='Log in -*' /&gt;&lt;webctrl tag='INPUT' aaname='Username' /&gt;" WaitForReady="COMPLETE" />
+                                                                      </ui:TypeInto.Target>
+                                                                    </ui:TypeInto>
+                                                                    <ui:TypeSecureText DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type secure text" EmptyField="True" sap:VirtualizedContainerService.HintSize="334,68" sap2010:WorkflowViewState.IdRef="TypeSecureText_2" SecureText="[password]" SendWindowMessages="False" SimulateType="True">
+                                                                      <ui:TypeSecureText.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;html app='chrome.exe' title='Log in*' /&gt;&lt;webctrl tag='INPUT' aaname='Password' /&gt;" WaitForReady="COMPLETE" />
+                                                                      </ui:TypeSecureText.Target>
+                                                                    </ui:TypeSecureText>
+                                                                    <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click Login" sap:VirtualizedContainerService.HintSize="314,68" sap2010:WorkflowViewState.IdRef="Click_3" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                                                                      <ui:Click.CursorPosition>
+                                                                        <ui:CursorPosition Position="Center">
+                                                                          <ui:CursorPosition.OffsetX>
+                                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                                          </ui:CursorPosition.OffsetX>
+                                                                          <ui:CursorPosition.OffsetY>
+                                                                            <InArgument x:TypeArguments="x:Int32" />
+                                                                          </ui:CursorPosition.OffsetY>
+                                                                        </ui:CursorPosition>
+                                                                      </ui:Click.CursorPosition>
+                                                                      <ui:Click.Target>
+                                                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" Selector="&lt;html app='chrome.exe' title='Log in*' /&gt;&lt;webctrl tag='INPUT' name='login' /&gt;" WaitForReady="COMPLETE" />
+                                                                      </ui:Click.Target>
+                                                                    </ui:Click>
+                                                                  </Sequence>
+                                                                  <ui:UiElementExists DisplayName="Element Exists Invalid  Creds" Exists="[InvalidCredsPrompt]" sap:VirtualizedContainerService.HintSize="944,68" sap2010:WorkflowViewState.IdRef="UiElementExists_6">
+                                                                    <ui:UiElementExists.Target>
+                                                                      <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;html app='chrome.exe' title='Log in*' /&gt;&lt;webctrl tag='P' aaname='*Sorry, your username and password are incorrect - please try again.*' /&gt;" TimeoutMS="4000" WaitForReady="COMPLETE" />
+                                                                    </ui:UiElementExists.Target>
+                                                                  </ui:UiElementExists>
+                                                                  <If Condition="[InvalidCredsPrompt]" sap:VirtualizedContainerService.HintSize="944,841" sap2010:WorkflowViewState.IdRef="If_4">
+                                                                    <If.Then>
+                                                                      <Throw Exception="[new BusinessRuleException(&quot;Invaild JIRA Credentials&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_6" />
+                                                                    </If.Then>
+                                                                    <If.Else>
+                                                                      <Sequence sap:VirtualizedContainerService.HintSize="719,694" sap2010:WorkflowViewState.IdRef="Sequence_19">
+                                                                        <Sequence.Variables>
+                                                                          <Variable x:TypeArguments="x:Boolean" Name="OnHomePage" />
+                                                                        </Sequence.Variables>
+                                                                        <sap:WorkflowViewStateService.ViewState>
+                                                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                          </scg:Dictionary>
+                                                                        </sap:WorkflowViewStateService.ViewState>
+                                                                        <ui:UiElementExists DisplayName="Element Exists On Home Page" Exists="[OnHomePage]" sap:VirtualizedContainerService.HintSize="697,68" sap2010:WorkflowViewState.IdRef="UiElementExists_7">
+                                                                          <ui:UiElementExists.Target>
+                                                                            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;html app='chrome.exe' title='System Dashboard*' /&gt;&lt;webctrl tag='H1' aaname='System Dashboard' /&gt;" TimeoutMS="10000" WaitForReady="INTERACTIVE" />
+                                                                          </ui:UiElementExists.Target>
+                                                                        </ui:UiElementExists>
+                                                                        <If Condition="[OnHomePage]" sap:VirtualizedContainerService.HintSize="697,462" sap2010:WorkflowViewState.IdRef="If_5">
+                                                                          <If.Then>
+                                                                            <Sequence sap:VirtualizedContainerService.HintSize="336,315" sap2010:WorkflowViewState.IdRef="Sequence_20">
+                                                                              <sap:WorkflowViewStateService.ViewState>
+                                                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                                </scg:Dictionary>
+                                                                              </sap:WorkflowViewStateService.ViewState>
+                                                                              <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_15" Level="Info" Message="[&quot;On HomePage&quot;]" />
+                                                                              <Assign sap:VirtualizedContainerService.HintSize="314,60" sap2010:WorkflowViewState.IdRef="Assign_9">
+                                                                                <Assign.To>
+                                                                                  <OutArgument x:TypeArguments="x:Boolean">[out_loginSucess]</OutArgument>
+                                                                                </Assign.To>
+                                                                                <Assign.Value>
+                                                                                  <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                                                                </Assign.Value>
+                                                                              </Assign>
+                                                                            </Sequence>
+                                                                          </If.Then>
+                                                                          <If.Else>
+                                                                            <Sequence sap:VirtualizedContainerService.HintSize="336,277" sap2010:WorkflowViewState.IdRef="Sequence_21">
+                                                                              <sap:WorkflowViewStateService.ViewState>
+                                                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                                </scg:Dictionary>
+                                                                              </sap:WorkflowViewStateService.ViewState>
+                                                                              <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_16" Level="Info" Message="[&quot;Not on HomePage&quot;]" />
+                                                                              <Throw Exception="[new SystemException(&quot;JIRA HomePage not found&quot;)]" sap:VirtualizedContainerService.HintSize="314,22" sap2010:WorkflowViewState.IdRef="Throw_7" />
+                                                                            </Sequence>
+                                                                          </If.Else>
+                                                                        </If>
+                                                                      </Sequence>
+                                                                    </If.Else>
+                                                                  </If>
+                                                                </Sequence>
+                                                              </ActivityAction>
+                                                            </ui:OpenBrowser.Body>
+                                                          </ui:OpenBrowser>
+                                                        </Sequence>
+                                                        <FlowStep.Next>
+                                                          <FlowDecision x:Name="__ReferenceID3" Condition="[out_loginSucess]" DisplayName="Login Successful?" sap:VirtualizedContainerService.HintSize="98,86.6666666666667" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
+                                                            <sap:WorkflowViewStateService.ViewState>
+                                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                <av:Point x:Key="ShapeLocation">245,406.5</av:Point>
+                                                                <av:Size x:Key="ShapeSize">98,86.6666666666667</av:Size>
+                                                                <av:PointCollection x:Key="TrueConnector">245,450 100,450 100,513.5</av:PointCollection>
+                                                                <av:PointCollection x:Key="FalseConnector">343,449.833333333333 373,449.833333333333 373,559.833333333333 410,559.833333333333</av:PointCollection>
+                                                              </scg:Dictionary>
+                                                            </sap:WorkflowViewStateService.ViewState>
+                                                            <FlowDecision.True>
+                                                              <FlowStep x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_7">
+                                                                <sap:WorkflowViewStateService.ViewState>
+                                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                    <av:Point x:Key="ShapeLocation">0,513.5</av:Point>
+                                                                    <av:Size x:Key="ShapeSize">200,114.666666666667</av:Size>
+                                                                    <av:PointCollection x:Key="ConnectorLocation">100,628.166666666667 120,628.166666666667 120,644.5</av:PointCollection>
+                                                                  </scg:Dictionary>
+                                                                </sap:WorkflowViewStateService.ViewState>
+                                                                <Sequence sap2010:Annotation.AnnotationText="set out_loginSucess to true/false" DisplayName="Navigate to Filter Query" sap:VirtualizedContainerService.HintSize="200,114.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_10">
+                                                                  <sap:WorkflowViewStateService.ViewState>
+                                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                      <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+                                                                    </scg:Dictionary>
+                                                                  </sap:WorkflowViewStateService.ViewState>
+                                                                  <ui:BrowserScope Browser="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" UiBrowser="{x:Null}" BrowserType="Chrome" DisplayName="Attach Browser 'JIRA Homepage'" sap:VirtualizedContainerService.HintSize="414,329" sap2010:WorkflowViewState.IdRef="BrowserScope_1" InformativeScreenshot="853936b3d5c68de574806a219fde4bfa" Selector="&lt;html app='chrome.exe' title='System Dashboard*' /&gt;">
+                                                                    <ui:BrowserScope.Body>
+                                                                      <ActivityAction x:TypeArguments="x:Object">
+                                                                        <ActivityAction.Argument>
+                                                                          <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                                                                        </ActivityAction.Argument>
+                                                                        <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="336,183" sap2010:WorkflowViewState.IdRef="Sequence_22">
+                                                                          <sap:WorkflowViewStateService.ViewState>
+                                                                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                              <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                            </scg:Dictionary>
+                                                                          </sap:WorkflowViewStateService.ViewState>
+                                                                          <ui:NavigateTo Browser="{x:Null}" DisplayName="Navigate to" sap:VirtualizedContainerService.HintSize="314,59" sap2010:WorkflowViewState.IdRef="NavigateTo_2" Url="[in_Config(&quot;JIRAFilterQuery&quot;).ToString]" />
+                                                                        </Sequence>
+                                                                      </ActivityAction>
+                                                                    </ui:BrowserScope.Body>
+                                                                  </ui:BrowserScope>
+                                                                </Sequence>
+                                                                <FlowStep.Next>
+                                                                  <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_6">
+                                                                    <sap:WorkflowViewStateService.ViewState>
+                                                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                        <av:Point x:Key="ShapeLocation">20,644.5</av:Point>
+                                                                        <av:Size x:Key="ShapeSize">200,50.6666666666667</av:Size>
+                                                                        <av:PointCollection x:Key="ConnectorLocation">220,670 300,670 300,796.5</av:PointCollection>
+                                                                      </scg:Dictionary>
+                                                                    </sap:WorkflowViewStateService.ViewState>
+                                                                    <Sequence DisplayName="Check Epic Page exists" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="Sequence_11">
+                                                                      <sap:WorkflowViewStateService.ViewState>
+                                                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                        </scg:Dictionary>
+                                                                      </sap:WorkflowViewStateService.ViewState>
+                                                                      <ui:UiElementExists DisplayName="Element Exists 'MY Open Issues'" Exists="[ISEpicPage]" sap:VirtualizedContainerService.HintSize="314,106" sap2010:WorkflowViewState.IdRef="UiElementExists_5">
+                                                                        <ui:UiElementExists.Target>
+                                                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="8fd58baa68657753f01a8695b1004437" Selector="&lt;html app='chrome.exe' title='[*MDM*-*' /&gt;&lt;webctrl parentid='search-header-view' tag='H1' /&gt;" TimeoutMS="45000" WaitForReady="INTERACTIVE" />
+                                                                        </ui:UiElementExists.Target>
+                                                                      </ui:UiElementExists>
+                                                                    </Sequence>
+                                                                    <FlowStep.Next>
+                                                                      <FlowDecision x:Name="__ReferenceID5" Condition="[ISEpicPage]" DisplayName="IsEPICPageExists" sap:VirtualizedContainerService.HintSize="92,87" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
+                                                                        <sap:WorkflowViewStateService.ViewState>
+                                                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                            <av:Point x:Key="ShapeLocation">254,796.5</av:Point>
+                                                                            <av:Size x:Key="ShapeSize">92,86.6666666666667</av:Size>
+                                                                            <av:PointCollection x:Key="TrueConnector">254,840 110,840 110,854.5</av:PointCollection>
+                                                                            <av:PointCollection x:Key="FalseConnector">346,840 490,840 490,864.5</av:PointCollection>
+                                                                          </scg:Dictionary>
+                                                                        </sap:WorkflowViewStateService.ViewState>
+                                                                        <FlowDecision.True>
+                                                                          <FlowStep x:Name="__ReferenceID7" sap2010:WorkflowViewState.IdRef="FlowStep_3">
+                                                                            <sap:WorkflowViewStateService.ViewState>
+                                                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                <av:Point x:Key="ShapeLocation">10,854.5</av:Point>
+                                                                                <av:Size x:Key="ShapeSize">200,50.6666666666667</av:Size>
+                                                                                <av:PointCollection x:Key="ConnectorLocation">110,905.5 110,935.5 130,935.5 130,1040</av:PointCollection>
+                                                                              </scg:Dictionary>
+                                                                            </sap:WorkflowViewStateService.ViewState>
+                                                                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="LogMessage_7" Level="Info" Message="[&quot;Login sucessfull- Epic page found&quot;]">
+                                                                              <sap:WorkflowViewStateService.ViewState>
+                                                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                                </scg:Dictionary>
+                                                                              </sap:WorkflowViewStateService.ViewState>
+                                                                            </ui:LogMessage>
+                                                                            <FlowStep.Next>
+                                                                              <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_2">
+                                                                                <sap:WorkflowViewStateService.ViewState>
+                                                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                    <av:Point x:Key="ShapeLocation">9,1040</av:Point>
+                                                                                    <av:Size x:Key="ShapeSize">242,60</av:Size>
+                                                                                  </scg:Dictionary>
+                                                                                </sap:WorkflowViewStateService.ViewState>
+                                                                                <Assign DisplayName="Assign Login Sucessful" sap:VirtualizedContainerService.HintSize="242,60" sap2010:WorkflowViewState.IdRef="Assign_3">
+                                                                                  <Assign.To>
+                                                                                    <OutArgument x:TypeArguments="x:Boolean">[out_loginSucess]</OutArgument>
+                                                                                  </Assign.To>
+                                                                                  <Assign.Value>
+                                                                                    <InArgument x:TypeArguments="x:Boolean">True</InArgument>
+                                                                                  </Assign.Value>
+                                                                                  <sap:WorkflowViewStateService.ViewState>
+                                                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                                    </scg:Dictionary>
+                                                                                  </sap:WorkflowViewStateService.ViewState>
+                                                                                </Assign>
+                                                                              </FlowStep>
+                                                                            </FlowStep.Next>
+                                                                          </FlowStep>
+                                                                        </FlowDecision.True>
+                                                                        <FlowDecision.False>
+                                                                          <FlowStep x:Name="__ReferenceID8" sap2010:WorkflowViewState.IdRef="FlowStep_5">
+                                                                            <sap:WorkflowViewStateService.ViewState>
+                                                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                <av:Point x:Key="ShapeLocation">390,864.5</av:Point>
+                                                                                <av:Size x:Key="ShapeSize">200,50.6666666666667</av:Size>
+                                                                                <av:PointCollection x:Key="ConnectorLocation">490,915.5 490,945.5 570,945.5 570,1069</av:PointCollection>
+                                                                              </scg:Dictionary>
+                                                                            </sap:WorkflowViewStateService.ViewState>
+                                                                            <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="LogMessage_8" Level="Info" Message="[&quot;Login Failed.Epic Page not found&quot;]">
+                                                                              <sap:WorkflowViewStateService.ViewState>
+                                                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                                </scg:Dictionary>
+                                                                              </sap:WorkflowViewStateService.ViewState>
+                                                                            </ui:LogMessage>
+                                                                            <FlowStep.Next>
+                                                                              <FlowStep x:Name="__ReferenceID10" sap2010:WorkflowViewState.IdRef="FlowStep_4">
+                                                                                <sap:WorkflowViewStateService.ViewState>
+                                                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                    <av:Point x:Key="ShapeLocation">470,1069</av:Point>
+                                                                                    <av:Size x:Key="ShapeSize">200,22</av:Size>
+                                                                                  </scg:Dictionary>
+                                                                                </sap:WorkflowViewStateService.ViewState>
+                                                                                <Throw Exception="[new SystemException(&quot;JIRA Epic page not found&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_2">
+                                                                                  <sap:WorkflowViewStateService.ViewState>
+                                                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                                    </scg:Dictionary>
+                                                                                  </sap:WorkflowViewStateService.ViewState>
+                                                                                </Throw>
+                                                                              </FlowStep>
+                                                                            </FlowStep.Next>
+                                                                          </FlowStep>
+                                                                        </FlowDecision.False>
+                                                                      </FlowDecision>
+                                                                    </FlowStep.Next>
+                                                                  </FlowStep>
+                                                                </FlowStep.Next>
+                                                              </FlowStep>
+                                                            </FlowDecision.True>
+                                                            <FlowDecision.False>
+                                                              <FlowStep x:Name="__ReferenceID6" sap2010:WorkflowViewState.IdRef="FlowStep_8">
+                                                                <sap:WorkflowViewStateService.ViewState>
+                                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                    <av:Point x:Key="ShapeLocation">410,534.5</av:Point>
+                                                                    <av:Size x:Key="ShapeSize">200,52.6666666666667</av:Size>
+                                                                    <av:PointCollection x:Key="ConnectorLocation">510,587.166666666667 510,619</av:PointCollection>
+                                                                  </scg:Dictionary>
+                                                                </sap:WorkflowViewStateService.ViewState>
+                                                                <ui:LogMessage DisplayName="Log Message" sap:VirtualizedContainerService.HintSize="200,52.6666666666667" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Info" Message="[&quot;user already logged in&quot;]">
+                                                                  <sap:WorkflowViewStateService.ViewState>
+                                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                                    </scg:Dictionary>
+                                                                  </sap:WorkflowViewStateService.ViewState>
+                                                                </ui:LogMessage>
+                                                                <FlowStep.Next>
+                                                                  <FlowStep x:Name="__ReferenceID11" sap2010:WorkflowViewState.IdRef="FlowStep_20">
+                                                                    <sap:WorkflowViewStateService.ViewState>
+                                                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                                        <av:Point x:Key="ShapeLocation">410,619</av:Point>
+                                                                        <av:Size x:Key="ShapeSize">200,22</av:Size>
+                                                                      </scg:Dictionary>
+                                                                    </sap:WorkflowViewStateService.ViewState>
+                                                                    <Throw Exception="[new SystemException(&quot;JIRA HomePage not found&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_8" />
+                                                                  </FlowStep>
+                                                                </FlowStep.Next>
+                                                              </FlowStep>
+                                                            </FlowDecision.False>
+                                                          </FlowDecision>
+                                                        </FlowStep.Next>
+                                                      </FlowStep>
+                                                    </FlowStep.Next>
+                                                  </FlowStep>
+                                                </FlowStep.Next>
+                                              </FlowStep>
+                                              <x:Reference>__ReferenceID0</x:Reference>
+                                              <x:Reference>__ReferenceID1</x:Reference>
+                                              <x:Reference>__ReferenceID2</x:Reference>
+                                              <x:Reference>__ReferenceID3</x:Reference>
+                                              <x:Reference>__ReferenceID4</x:Reference>
+                                              <x:Reference>__ReferenceID5</x:Reference>
+                                              <x:Reference>__ReferenceID6</x:Reference>
+                                              <x:Reference>__ReferenceID7</x:Reference>
+                                              <x:Reference>__ReferenceID8</x:Reference>
+                                              <x:Reference>__ReferenceID9</x:Reference>
+                                              <x:Reference>__ReferenceID10</x:Reference>
+                                              <x:Reference>__ReferenceID11</x:Reference>
+                                              <FlowStep x:Name="__ReferenceID13" sap2010:WorkflowViewState.IdRef="FlowStep_21">
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <av:Point x:Key="ShapeLocation">439,50</av:Point>
+                                                    <av:Size x:Key="ShapeSize">262,62</av:Size>
+                                                    <av:PointCollection x:Key="ConnectorLocation">439,80 300,80 300,127.5</av:PointCollection>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                                <Assign sap:VirtualizedContainerService.HintSize="262,62" sap2010:WorkflowViewState.IdRef="Assign_10">
+                                                  <Assign.To>
+                                                    <OutArgument x:TypeArguments="x:Int32">[MaxRetryCount]</OutArgument>
+                                                  </Assign.To>
+                                                  <Assign.Value>
+                                                    <InArgument x:TypeArguments="x:Int32">[Cint(in_Config("MaxRetryCount"))-1]</InArgument>
+                                                  </Assign.Value>
+                                                  <sap:WorkflowViewStateService.ViewState>
+                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                    </scg:Dictionary>
+                                                  </sap:WorkflowViewStateService.ViewState>
+                                                </Assign>
+                                                <FlowStep.Next>
+                                                  <x:Reference>__ReferenceID12</x:Reference>
+                                                </FlowStep.Next>
+                                              </FlowStep>
+                                            </Flowchart>
+                                          </TryCatch.Try>
+                                          <TryCatch.Catches>
+                                            <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="728,21" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+                                              <sap:WorkflowViewStateService.ViewState>
+                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                </scg:Dictionary>
+                                              </sap:WorkflowViewStateService.ViewState>
+                                              <ActivityAction x:TypeArguments="s:Exception">
+                                                <ActivityAction.Argument>
+                                                  <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                                                </ActivityAction.Argument>
+                                                <Sequence sap:VirtualizedContainerService.HintSize="336,415" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                                                  <sap:WorkflowViewStateService.ViewState>
+                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                    </scg:Dictionary>
+                                                  </sap:WorkflowViewStateService.ViewState>
+                                                  <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_10" Level="Info" Message="[&quot;System Error in JIRA Login : &quot;+exception.Message]" />
+                                                  <Assign DisplayName="Assign Login Sucessful" sap:VirtualizedContainerService.HintSize="314,60" sap2010:WorkflowViewState.IdRef="Assign_4">
+                                                    <Assign.To>
+                                                      <OutArgument x:TypeArguments="x:Boolean">[out_loginSucess]</OutArgument>
+                                                    </Assign.To>
+                                                    <Assign.Value>
+                                                      <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                                    </Assign.Value>
+                                                    <sap:WorkflowViewStateService.ViewState>
+                                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                      </scg:Dictionary>
+                                                    </sap:WorkflowViewStateService.ViewState>
+                                                  </Assign>
+                                                  <Assign DisplayName="Assign Login Sucessful" sap:VirtualizedContainerService.HintSize="314,60" sap2010:WorkflowViewState.IdRef="Assign_5">
+                                                    <Assign.To>
+                                                      <OutArgument x:TypeArguments="s:Exception">[SystemException]</OutArgument>
+                                                    </Assign.To>
+                                                    <Assign.Value>
+                                                      <InArgument x:TypeArguments="s:Exception">[exception]</InArgument>
+                                                    </Assign.Value>
+                                                    <sap:WorkflowViewStateService.ViewState>
+                                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                      </scg:Dictionary>
+                                                    </sap:WorkflowViewStateService.ViewState>
+                                                  </Assign>
+                                                </Sequence>
+                                              </ActivityAction>
+                                            </Catch>
+                                            <Catch x:TypeArguments="ui:BusinessRuleException" sap:VirtualizedContainerService.HintSize="728,21" sap2010:WorkflowViewState.IdRef="Catch`1_3">
+                                              <sap:WorkflowViewStateService.ViewState>
+                                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                  <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                  <x:Boolean x:Key="IsPinned">False</x:Boolean>
+                                                </scg:Dictionary>
+                                              </sap:WorkflowViewStateService.ViewState>
+                                              <ActivityAction x:TypeArguments="ui:BusinessRuleException">
+                                                <ActivityAction.Argument>
+                                                  <DelegateInArgument x:TypeArguments="ui:BusinessRuleException" Name="exception" />
+                                                </ActivityAction.Argument>
+                                                <Sequence sap:VirtualizedContainerService.HintSize="336,415" sap2010:WorkflowViewState.IdRef="Sequence_13">
+                                                  <sap:WorkflowViewStateService.ViewState>
+                                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                    </scg:Dictionary>
+                                                  </sap:WorkflowViewStateService.ViewState>
+                                                  <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_11" Level="Info" Message="[&quot;Business Error in JIRA Login : &quot;+exception.Message]" />
+                                                  <Assign DisplayName="Assign Login Sucessful" sap:VirtualizedContainerService.HintSize="314,60" sap2010:WorkflowViewState.IdRef="Assign_6">
+                                                    <Assign.To>
+                                                      <OutArgument x:TypeArguments="x:Boolean">[out_loginSucess]</OutArgument>
+                                                    </Assign.To>
+                                                    <Assign.Value>
+                                                      <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                                                    </Assign.Value>
+                                                    <sap:WorkflowViewStateService.ViewState>
+                                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                      </scg:Dictionary>
+                                                    </sap:WorkflowViewStateService.ViewState>
+                                                  </Assign>
+                                                  <Assign sap:VirtualizedContainerService.HintSize="314,60" sap2010:WorkflowViewState.IdRef="Assign_7">
+                                                    <Assign.To>
+                                                      <OutArgument x:TypeArguments="ui:BusinessRuleException">[BusinessRuleException]</OutArgument>
+                                                    </Assign.To>
+                                                    <Assign.Value>
+                                                      <InArgument x:TypeArguments="ui:BusinessRuleException">[exception]</InArgument>
+                                                    </Assign.Value>
+                                                  </Assign>
+                                                </Sequence>
+                                              </ActivityAction>
+                                            </Catch>
+                                          </TryCatch.Catches>
+                                        </TryCatch>
+                                      </Sequence>
+                                      <FlowStep.Next>
+                                        <x:Reference>__ReferenceID14</x:Reference>
+                                      </FlowStep.Next>
+                                    </FlowStep>
+                                  </FlowStep.Next>
+                                </FlowStep>
+                              </FlowDecision.True>
+                              <FlowDecision.False>
+                                <FlowStep x:Name="__ReferenceID17" sap2010:WorkflowViewState.IdRef="FlowStep_15">
+                                  <sap:WorkflowViewStateService.ViewState>
+                                    <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                      <av:Point x:Key="ShapeLocation">670,734.5</av:Point>
+                                      <av:Size x:Key="ShapeSize">200,50.6666666666667</av:Size>
+                                      <av:PointCollection x:Key="ConnectorLocation">770,785.5 770,899</av:PointCollection>
+                                    </scg:Dictionary>
+                                  </sap:WorkflowViewStateService.ViewState>
+                                  <ui:LogMessage DisplayName="Log message Login Failed" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="LogMessage_12" Level="Info" Message="[&quot;JIRA Login Failed&quot;]" />
+                                  <FlowStep.Next>
+                                    <FlowStep x:Name="__ReferenceID18" sap2010:WorkflowViewState.IdRef="FlowStep_14">
+                                      <sap:WorkflowViewStateService.ViewState>
+                                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                          <av:Point x:Key="ShapeLocation">670,899</av:Point>
+                                          <av:Size x:Key="ShapeSize">200,22</av:Size>
+                                        </scg:Dictionary>
+                                      </sap:WorkflowViewStateService.ViewState>
+                                      <Throw Exception="[New System.Exception(&quot;Max Retry for JIRA Login Reached.Login Failed&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_3">
+                                        <sap:WorkflowViewStateService.ViewState>
+                                          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                          </scg:Dictionary>
+                                        </sap:WorkflowViewStateService.ViewState>
+                                      </Throw>
+                                    </FlowStep>
+                                  </FlowStep.Next>
+                                </FlowStep>
+                              </FlowDecision.False>
+                            </FlowDecision>
+                          </FlowStep.Next>
+                        </FlowStep>
+                      </FlowDecision.True>
+                      <FlowDecision.False>
+                        <FlowStep x:Name="__ReferenceID23" sap2010:WorkflowViewState.IdRef="FlowStep_18">
+                          <sap:WorkflowViewStateService.ViewState>
+                            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                              <av:Point x:Key="ShapeLocation">980,624.5</av:Point>
+                              <av:Size x:Key="ShapeSize">200,50.6666666666667</av:Size>
+                              <av:PointCollection x:Key="ConnectorLocation">1080,675.5 1080,849</av:PointCollection>
+                            </scg:Dictionary>
+                          </sap:WorkflowViewStateService.ViewState>
+                          <ui:LogMessage DisplayName="Log message Login Failed" sap:VirtualizedContainerService.HintSize="200,51" sap2010:WorkflowViewState.IdRef="LogMessage_13" Level="Info" Message="[&quot;JIRA Login Failed&quot;]" />
+                          <FlowStep.Next>
+                            <FlowStep x:Name="__ReferenceID24" sap2010:WorkflowViewState.IdRef="FlowStep_17">
+                              <sap:WorkflowViewStateService.ViewState>
+                                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                  <av:Point x:Key="ShapeLocation">980,849</av:Point>
+                                  <av:Size x:Key="ShapeSize">200,22</av:Size>
+                                </scg:Dictionary>
+                              </sap:WorkflowViewStateService.ViewState>
+                              <Throw Exception="[BusinessRuleException]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_4">
+                                <sap:WorkflowViewStateService.ViewState>
+                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                  </scg:Dictionary>
+                                </sap:WorkflowViewStateService.ViewState>
+                              </Throw>
+                            </FlowStep>
+                          </FlowStep.Next>
+                        </FlowStep>
+                      </FlowDecision.False>
+                    </FlowDecision>
+                  </FlowStep.Next>
+                </FlowStep>
+              </FlowDecision.False>
+            </FlowDecision>
+            <x:Reference>__ReferenceID15</x:Reference>
+            <x:Reference>__ReferenceID16</x:Reference>
+            <x:Reference>__ReferenceID17</x:Reference>
+            <x:Reference>__ReferenceID18</x:Reference>
+            <x:Reference>__ReferenceID19</x:Reference>
+            <x:Reference>__ReferenceID20</x:Reference>
+            <x:Reference>__ReferenceID21</x:Reference>
+            <x:Reference>__ReferenceID22</x:Reference>
+            <x:Reference>__ReferenceID23</x:Reference>
+            <x:Reference>__ReferenceID24</x:Reference>
+            <x:Reference>__ReferenceID25</x:Reference>
+          </Flowchart>
+        </Sequence>
+      </TryCatch.Try>
+      <TryCatch.Catches>
+        <Catch x:TypeArguments="s:Exception" sap:VirtualizedContainerService.HintSize="1254,21" sap2010:WorkflowViewState.IdRef="Catch`1_4">
+          <sap:WorkflowViewStateService.ViewState>
+            <scg:Dictionary x:TypeArguments="x:String, x:Object">
+              <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+              <x:Boolean x:Key="IsPinned">False</x:Boolean>
+            </scg:Dictionary>
+          </sap:WorkflowViewStateService.ViewState>
+          <ActivityAction x:TypeArguments="s:Exception">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+            </ActivityAction.Argument>
+            <Sequence sap:VirtualizedContainerService.HintSize="336,377" sap2010:WorkflowViewState.IdRef="Sequence_16">
+              <sap:WorkflowViewStateService.ViewState>
+                <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                  <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                </scg:Dictionary>
+              </sap:WorkflowViewStateService.ViewState>
+              <ui:LogMessage DisplayName="Log message" sap:VirtualizedContainerService.HintSize="314,91" sap2010:WorkflowViewState.IdRef="LogMessage_14" Level="Info" Message="[&quot;System Exception during JIRA Login: &quot;+exception.Message]" />
+              <Assign sap:VirtualizedContainerService.HintSize="314,60" sap2010:WorkflowViewState.IdRef="Assign_8">
+                <Assign.To>
+                  <OutArgument x:TypeArguments="x:Boolean">[out_loginSucess]</OutArgument>
+                </Assign.To>
+                <Assign.Value>
+                  <InArgument x:TypeArguments="x:Boolean">False</InArgument>
+                </Assign.Value>
+              </Assign>
+              <Throw Exception="[exception]" sap:VirtualizedContainerService.HintSize="314,22" sap2010:WorkflowViewState.IdRef="Throw_5" />
+            </Sequence>
+          </ActivityAction>
+        </Catch>
+      </TryCatch.Catches>
+    </TryCatch>
+  </Sequence>
+</Activity>

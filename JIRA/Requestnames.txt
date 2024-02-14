@@ -1,0 +1,68 @@
+
+Gold Part Request - Single
+
+Supplier Onboarding Request
+
+AVL Maintenance
+
+PFT Standard Part Request - Single
+
+PFT Standard Parts Request - Multiple
+
+Template Creation & Modification
+
+Tuboscope Standard Part Request - Multiple
+
+Consignment Part Request – Multiple
+
+Consignment Part Request
+
+CaPS Standard Parts Request - Multiple Parts
+
+Configured Part Request
+
+CaPS Standard Parts Request - Single
+
+JDE Asset Set-up/Change
+
+Duplicate Parts /Part Number Collision
+
+Sales Reporting Code Requests
+
+JDE Item Data Updates
+
+Standard Part Request
+
+Access Request
+
+Actual Cost Part Request
+
+Weighted Average Part Request
+
+RA Number Request 
+
+Service Code Request
+
+Billing Code Request
+
+Buy Back Request - Non-US
+
+Non-stock Part Request - Multiple
+
+Non-stock Part Request - Single
+
+Gold Part Request - Multiple
+
+Tuboscope Standard Part Request
+
+Changes to Existing Parts & Legacy Releases
+
+iLink Template Update
+
+Superseded/ Replaced Part Request
+
+Buy Back Request - US
+
+Task - Detailed
+
+Task - Quick

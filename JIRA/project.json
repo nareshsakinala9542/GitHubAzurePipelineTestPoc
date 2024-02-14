@@ -1,0 +1,27 @@
+{
+  "name": "OneDrive_1_3-13-2019",
+  "description": "Project",
+  "main": "JIRA-GetTicketInfo.xaml",
+  "dependencies": {
+    "UiPath.UIAutomation.Activities": "[18.4.4]",
+    "UiPath.Credentials.Activities": "[1.1.6479.13204]",
+    "UiPath.Excel.Activities": "[2.5.2.0]",
+    "UiPath.Mail.Activities": "[1.3.0.0]",
+    "UiPath.System.Activities": "[18.4.2]"
+  },
+  "schemaVersion": "3.2",
+  "studioVersion": "18.2",
+  "projectVersion": "1.0.7044.5065",
+  "runtimeOptions": {
+    "autoDispose": false,
+    "excludedLoggedData": [
+      "Private:*",
+      "*password*"
+    ]
+  },
+  "projectType": "Workflow",
+  "libraryOptions": {
+    "includeOriginalXaml": false,
+    "privateWorkflows": []
+  }
+}
